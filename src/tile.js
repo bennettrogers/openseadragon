@@ -53,7 +53,7 @@
  * drawing operation, in pixels. Note that this only works when drawing with canvas; when drawing
  * with HTML the entire tile is always used.
  */
-$.Tile = function(level, x, y, bounds, exists, url, context2D, loadWithAjax, ajaxHeaders, sourceBounds) {
+$.Tile = function(level, x, y, bounds, exists, url, cacheKey, context2D, loadWithAjax, ajaxHeaders, sourceBounds) {
     /**
      * The zoom level this tile belongs to.
      * @member {Number} level
@@ -121,10 +121,14 @@ $.Tile = function(level, x, y, bounds, exists, url, context2D, loadWithAjax, aja
      * @member {String} cacheKey
      * @memberof OpenSeadragon.Tile#
      */
-    if (this.ajaxHeaders) {
-        this.cacheKey = this.url + "+" + JSON.stringify(this.ajaxHeaders);
+    if (cacheKey) {
+        this.cacheKey = cacheKey;
     } else {
-        this.cacheKey = this.url;
+        if (this.ajaxHeaders) {
+            this.cacheKey = this.url + "+" + JSON.stringify(this.ajaxHeaders);
+        } else {
+            this.cacheKey = this.url;
+        }
     }
     /**
      * Is this tile loaded?

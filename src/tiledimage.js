@@ -1490,6 +1490,7 @@ function getTile(
         sourceBounds,
         exists,
         url,
+        cacheKey,
         ajaxHeaders,
         context2D,
         tile;
@@ -1508,6 +1509,9 @@ function getTile(
         sourceBounds = tileSource.getTileBounds( level, xMod, yMod, true );
         exists  = tileSource.tileExists( level, xMod, yMod );
         url     = tileSource.getTileUrl( level, xMod, yMod );
+        if (typeof tileSource.getTileCacheKey === "function") {
+            cacheKey = tileSource.getTileCacheKey( level, xMod, yMod );
+        }
 
         // Headers are only applicable if loadTilesWithAjax is set
         if (tiledImage.loadTilesWithAjax) {
@@ -1530,6 +1534,7 @@ function getTile(
             bounds,
             exists,
             url,
+            cacheKey,
             context2D,
             tiledImage.loadTilesWithAjax,
             ajaxHeaders,
