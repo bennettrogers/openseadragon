@@ -1570,6 +1570,12 @@ function getTile(
  * @param {Number} time
  */
 function loadTile( tiledImage, tile, time ) {
+    tiledImage.viewer.raiseEvent("tile-loading", {
+        tile: tile,
+        tiledImage: tiledImage,
+        time: time
+    });
+
     tile.loading = true;
     tiledImage._imageLoader.addJob({
         src: tile.url,
